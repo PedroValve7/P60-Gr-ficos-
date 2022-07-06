@@ -58,7 +58,7 @@ void Principal::dibujar()
     int incYN3 = this->incY(altoN3);
 
     // Dibujar primera barra
-    painter.drawRect(x+50, y+50+incYN1,100,altoN1);
+    painter.drawRect(x+75, y+50+incYN1,100,altoN1);
 
     // Crear un objeto color para el relleno
     QColor colorRelleno(190,120,162);
@@ -75,7 +75,7 @@ void Principal::dibujar()
     painter.setBrush(colorRelleno);
 
     // Dibujar segunda barra
-    painter.drawRect(x+170, y+50+incYN2, 100, altoN2);
+    painter.drawRect(x+200, y+50+incYN2, 100, altoN2);
 
     // Creando los colores de la tercera barra
     QColor cRellenoBarra3(253, 253, 115);
@@ -87,7 +87,7 @@ void Principal::dibujar()
     painter.setBrush(cRellenoBarra3);
 
     // Dibujar tercera barra
-    painter.drawRect(x+290,y+50+incYN3,100,altoN3-1);
+    painter.drawRect(x+315,y+50+incYN3,100,altoN3-3);
 
     //Promedio
 
@@ -111,6 +111,18 @@ void Principal::dibujar()
     painter.drawLine(10,450,420,y+450);
 
    //X,Y,Z
+
+    painter.setPen(Qt::blue);
+    painter.setFont(QFont("Time New Roman",14));
+    painter.drawText(430,455,"x");
+    painter.drawText(45,25,"y");
+
+    //Barras Divisionadas
+
+
+
+
+
 
 }
 
