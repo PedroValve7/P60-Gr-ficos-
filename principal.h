@@ -23,9 +23,9 @@ private slots:
 
     void on_intNota1_valueChanged(int arg1);
 
-    void on_intNota2_valueChanged(int arg1);
+    void on_intNota2_valueChanged(int arg2);
 
-    void on_intNota3_valueChanged(int arg1);
+    void on_intNota3_valueChanged(int arg3);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

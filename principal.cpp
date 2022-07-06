@@ -87,8 +87,27 @@ void Principal::dibujar()
     painter.setBrush(cRellenoBarra3);
 
     // Dibujar tercera barra
-    painter.drawRect(x+290,y+50+incYN3,100,altoN3);
+    painter.drawRect(x+290,y+50+incYN3,100,altoN3-1);
+ //Ejes
+
+
+    QColor eje (0,0,0,);
+    pincel.setColor(eje);
+    painter.setPen(eje);
+    painter.drawLine(eje);
+    painter.drawLine(50,480,50,30);
+    painter.drawLine(10,450,420,y+450);
+
+    //Dibujar un texto
+
+    QPainter pintor(this);
+    pintor.setPen(Qt::red);
+    pintor.setFont(QFont("Time New Roman",80));
+    pintor.drawText(50,100,"x");
+    pintor.drawText(5,10,"Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 }
+
+
 
 int Principal::getAlto(int valor)
 {
@@ -118,12 +137,12 @@ void Principal::on_intNota1_valueChanged(int arg1)
     dibujar();
 }
 
-void Principal::on_intNota2_valueChanged(int arg1)
+void Principal::on_intNota2_valueChanged(int arg2)
 {
     dibujar();
 }
 
-void Principal::on_intNota3_valueChanged(int arg1)
+void Principal::on_intNota3_valueChanged(int arg3)
 {
     dibujar();
 }
