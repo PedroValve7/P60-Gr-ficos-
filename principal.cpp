@@ -88,23 +88,30 @@ void Principal::dibujar()
 
     // Dibujar tercera barra
     painter.drawRect(x+290,y+50+incYN3,100,altoN3-1);
- //Ejes
+
+    //Promedio
+
+    QColor line(106,38,111);
+    pincel.setWidth(105);
+    pincel.setColor(line);
+    pincel.setWidth(105);
+    painter.setPen(line);
+
+    float promedio = (nota1 + nota2 + nota3) / 3;
+    int prom = this->getAlto(promedio);
+    painter.drawLine(x+50,y+450-prom,393,y+450-prom);
+
+    //Ejes
 
 
-    QColor eje (0,0,0,);
+    QColor eje (0,0,0);
     pincel.setColor(eje);
     painter.setPen(eje);
-    painter.drawLine(eje);
     painter.drawLine(50,480,50,30);
     painter.drawLine(10,450,420,y+450);
 
-    //Dibujar un texto
+   //X,Y,Z
 
-    QPainter pintor(this);
-    pintor.setPen(Qt::red);
-    pintor.setFont(QFont("Time New Roman",80));
-    pintor.drawText(50,100,"x");
-    pintor.drawText(5,10,"Siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 }
 
 
