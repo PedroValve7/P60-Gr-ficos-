@@ -1,6 +1,11 @@
 #include "principal.h"
 #include "ui_principal.h"
 
+#include <QPainter>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDebug>
+
 Principal::Principal(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Principal)
@@ -8,6 +13,8 @@ Principal::Principal(QWidget *parent)
     ui->setupUi(this);
     lienzo = QPixmap(500,500);
     this->dibujar();
+
+    ui->outCuadro->setPixmap(lienzo);
 
 }
 
@@ -19,10 +26,7 @@ Principal::~Principal()
 void Principal::paintEvent(QPaintEvent *event)
 {
     ui->outCuadro->setPixmap(lienzo);
-    // Aceptar el evento
-    event;
 }
-
 
 void Principal::dibujar()
 {
@@ -30,7 +34,7 @@ void Principal::dibujar()
 
     QPainter painter(&lienzo);
 
-    int x = 0;
+    int x = 10;
     int y = 0;
 
     // Crear un pincel para los bordes
@@ -42,28 +46,18 @@ void Principal::dibujar()
     // Establecer el pincel al "pintor"
     painter.setPen(pincel);
 
-    //Obtener datos para la primera barra
-    int nota1 = ui->intNota1->value();
-    int altoN1 = this->getAlto(nota1);
-    int incYN1 = this->incY(altoN1);
 
-    //Obtener datos para la segunda barra
-    int nota2 = ui->intNota2->value();
-    int altoN2 = this->getAlto(nota2);
-    int incYN2 = this->incY(altoN2);
-
-    //Obtener datos para la tercera barra
-    int nota3 = ui->intNota3->value();
-    int altoN3 = this->getAlto(nota3);
-    int incYN3 = this->incY(altoN3);
+    int nota1= ui->inNota1->value();
+    int Alturan1=this->getAlto(nota1);
+    int incYN1=this->incY(Alturan1);
 
     // Dibujar primera barra
-    painter.drawRect(x+75, y+50+incYN1,100,altoN1);
+    painter.drawRect(x+50, y+50+incYN1,100,Alturan1);
 
     // Crear un objeto color para el relleno
-    QColor colorRelleno(190,120,162);
+    QColor colorRelleno(Qt::yellow);
     // Crear otro objeto color para el borde
-    QColor colorBorde(78,3,48);
+    QColor colorBorde(Qt::darkBlue);
 
     // Cambiar el color del pincel
     pincel.setColor(colorBorde);
@@ -73,9 +67,11 @@ void Principal::dibujar()
 
     // Establecer el color al brush (relleno)
     painter.setBrush(colorRelleno);
-
+    int nota2 = ui->inNota2->value();
+    int Alturan2=this->getAlto(nota2);
+    int incYN2=this->incY(Alturan2);
     // Dibujar segunda barra
-    painter.drawRect(x+200, y+50+incYN2, 100, altoN2);
+    painter.drawRect(x+170, y+50+incYN2, 100, Alturan2);
 
     // Creando los colores de la tercera barra
     QColor cRellenoBarra3(253, 253, 115);
@@ -87,55 +83,51 @@ void Principal::dibujar()
     painter.setBrush(cRellenoBarra3);
 
     // Dibujar tercera barra
-    painter.drawRect(x+315,y+50+incYN3,100,altoN3-3);
+    int nota3=ui->inNota3->value();
+    int Alturan3=this->getAlto(nota3);
+    int incYN3=this->incY(Alturan3);
 
-    //Promedio
+    painter.drawRect(x+290,y+50+incYN3,100,Alturan3);
 
-    QColor line(106,38,111);
-    pincel.setWidth(105);
-    pincel.setColor(line);
-    pincel.setWidth(105);
-    painter.setPen(line);
-
-    float promedio = (nota1 + nota2 + nota3) / 3;
-    int prom = this->getAlto(promedio);
-    painter.drawLine(x+50,y+450-prom,393,y+450-prom);
-
-    //Ejes
-
-
-    QColor eje (0,0,0);
-    pincel.setColor(eje);
-    painter.setPen(eje);
-    painter.drawLine(50,480,50,30);
-    painter.drawLine(10,450,420,y+450);
-
-   //X,Y,Z
-
-    painter.setPen(Qt::blue);
-    painter.setFont(QFont("Time New Roman",14));
-    painter.drawText(430,455,"x");
-    painter.drawText(45,25,"y");
-
-    //Barras Divisionadas
-
-
-
-
+    int a=ui->inNota1->value();
+    int b=ui->inNota2->value();
+    int c=ui->inNota3->value();
+    float prom = (a+b+c)/3;
+    ui->outPromedio->setNum(prom);
+    // Estableciendo colores al puncel y al painter
+    pincel.setColor(Qt::black);
+    painter.setPen(pincel);
+    painter.drawLine(800,450,0,450);
+    painter.drawLine(50,0,50,500);
+    int cont=450;
+    int as=20;
+    int divisiones=5;
+    for(int i=0;i<divisiones;i++){
+        cont=cont-(80);
+        qDebug()<<as<< " "<<cont;
+        painter.drawText(20,cont,QString::number(as));
+        painter.drawLine(45,cont,50,cont);
+        as=as+20;
+    }
+    painter.drawText(100,490,"N1");
+    painter.drawText(200,490,"N2");
+    painter.drawText(300,490,"N3");
+    painter.drawText(250,440-prom*4,QString::number(prom));
+    pincel.setColor(Qt:: blue);
+    painter.setPen(pincel);
+    painter.drawLine(400,450-prom*4,60,450-prom*4);
 
 
 }
 
-
-
-int Principal::getAlto(int valor)
+int Principal::getAlto(int a)
 {
-    return 4 * valor;
+    return 4*a;
 }
 
-int Principal::incY(int alto)
+int Principal::incY(int a)
 {
-    return 400 - alto;
+    return 400-a;
 }
 
 
@@ -151,17 +143,19 @@ void Principal::on_actionGuardar_triggered()
     }
 }
 
-void Principal::on_intNota1_valueChanged(int arg1)
+
+
+void Principal::on_inNota1_valueChanged(int arg1)
 {
     dibujar();
 }
 
-void Principal::on_intNota2_valueChanged(int arg2)
+void Principal::on_inNota2_valueChanged(int arg1)
 {
     dibujar();
 }
 
-void Principal::on_intNota3_valueChanged(int arg3)
+void Principal::on_inNota3_valueChanged(int arg1)
 {
     dibujar();
 }

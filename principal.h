@@ -2,9 +2,6 @@
 #define PRINCIPAL_H
 
 #include <QMainWindow>
-#include <QPainter>
-#include <QFileDialog>
-#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Principal; }
@@ -16,27 +13,27 @@ class Principal : public QMainWindow
 
 public:
     Principal(QWidget *parent = nullptr);
+
     ~Principal();
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void on_actionGuardar_triggered();
 
-    void on_intNota1_valueChanged(int arg1);
+    void on_inNota1_valueChanged(int arg1);
 
-    void on_intNota2_valueChanged(int arg2);
+    void on_inNota2_valueChanged(int arg1);
 
-    void on_intNota3_valueChanged(int arg3);
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
+    void on_inNota3_valueChanged(int arg1);
 
 private:
     Ui::Principal *ui;
-    // Objeto que permite realizar graficos >> lienzo donde vamos a dibujar
     QPixmap lienzo;
 
+    QString Promedio();
     void dibujar();
-    int getAlto(int valor);
-    int incY(int alto);
+    int getAlto(int a);
+    int incY(int a);
 };
 #endif // PRINCIPAL_H
